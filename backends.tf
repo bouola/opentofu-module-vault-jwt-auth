@@ -10,8 +10,8 @@ resource "vault_jwt_auth_backend" "jwt_backend" {
 }
 
 locals {
-  roles_from_list = { for role in var.vault_jwt_auth_backend_roles : role.role_name => role }
-  role_json_files = var.vault_jwt_auth_backend_roles_path != null ? fileset(var.vault_jwt_auth_backend_roles_path, "*.json") : []
+  roles_from_list    = { for role in var.vault_jwt_auth_backend_roles : role.role_name => role }
+  role_json_files    = var.vault_jwt_auth_backend_roles_path != null ? fileset(var.vault_jwt_auth_backend_roles_path, "*.json") : []
   decoded_json_roles = [for file in local.role_json_files : jsondecode(file("${var.vault_jwt_auth_backend_roles_path}/${file}"))]
 
   roles_from_json_path = { for role in local.decoded_json_roles : role.role_name => role }
@@ -25,9 +25,9 @@ locals {
 resource "vault_jwt_auth_backend_role" "jwt_backend_roles" {
   for_each = local.jwt_backend_roles
 
-  backend   = vault_jwt_auth_backend.jwt_backend.path
-  role_name = endswith(each.value.role_name, "-role") ? each.value.role_name : "${each.value.role_name}-role"
-  role_type = each.value.role_type
+  backend         = vault_jwt_auth_backend.jwt_backend.path
+  role_name       = endswith(each.value.role_name, "-role") ? each.value.role_name : "${each.value.role_name}-role"
+  role_type       = each.value.role_type
   bound_audiences = each.value.bound_audiences
 
   allowed_redirect_uris = lookup(each.value, "allowed_redirect_uris", null)

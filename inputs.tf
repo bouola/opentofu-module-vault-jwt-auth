@@ -25,10 +25,10 @@ variable "vault_jwt_auth_backend_roles" {
     bound_audiences       = list(string)
     allowed_redirect_uris = optional(list(string))
     oidc_scopes           = optional(list(string))
-    user_claim           = string
-    group_claim          = optional(string)
-    bound_claims         = optional(map(any))
-    verbose_oidc_logging = optional(bool, false)
+    user_claim            = string
+    group_claim           = optional(string)
+    bound_claims          = optional(map(any))
+    verbose_oidc_logging  = optional(bool, false)
     token_policies        = optional(list(string), [])
     token_ttl             = optional(number, 3600)
     token_max_ttl         = optional(number, 14400)
