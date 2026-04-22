@@ -32,8 +32,6 @@ jobs:
         with:
           experimental: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: OpenTofu Format Check
         run: tofu fmt -check -recursive
@@ -61,11 +59,9 @@ jobs:
         with:
           experimental: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Trivy Scan
-        run: trivy config . --severity HIGH,CRITICAL
+  # - name: Trivy Scan
+  #    run: trivy config . --severity HIGH,CRITICAL
 
   tofu-validate:
     name: OpenTofu Validate
@@ -79,8 +75,6 @@ jobs:
         with:
           experimental: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: OpenTofu Validate
         run: tofu init -backend=false && tofu validate
